@@ -64,12 +64,16 @@ public class MainActivity extends AppCompatActivity {
             objectAnimator.start();
             iv.setTag(true);
             showSectorMenu();
+            /** 打开下面的注释可以看淡垂直显示的菜单效果*/
+//            showVerticalMenu();
         } else {
             iv.setTag(false);
             ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv, "rotation", 45, 0);
             objectAnimator.setDuration(500);
             objectAnimator.start();
             closeSectorMenu();
+            /** 关闭淡垂直显示的菜单效果*/
+//            closeVerticalMenu();
         }
 
     }
@@ -113,6 +117,50 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, point.toString());
             ObjectAnimator oax = ObjectAnimator.ofFloat(imageViews.get(i), "translationX", 0, point.x);
             ObjectAnimator oay = ObjectAnimator.ofFloat(imageViews.get(i), "translationY", 0, point.y);
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(imageViews.get(i), "rotation", 0, 360);
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.setDuration(500);
+            animatorSet.play(oax).with(oay).with(objectAnimator);
+            animatorSet.start();
+        }
+    }
+
+    /**
+     * 显示垂直菜单
+     */
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    private void showVerticalMenu() {
+        for (int i = 0; i < imageViews.size(); i++) {
+            /*** 此处使用PointF*/
+            PointF point = new PointF();
+            point.x = 0;
+            /*** 此处y坐标是负的，因为纵坐标向下为正，而我们要在上面显示，大家可以更改符号看效果*/
+            point.y = -(150 * (i + 1));
+            Log.i(TAG, point.toString());
+            ObjectAnimator oax = ObjectAnimator.ofFloat(imageViews.get(i), "translationX", 0, point.x);
+            ObjectAnimator oay = ObjectAnimator.ofFloat(imageViews.get(i), "translationY", 0, point.y);
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(imageViews.get(i), "rotation", 0, 360);
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.setDuration(500);
+            animatorSet.play(oax).with(oay).with(objectAnimator);
+            animatorSet.start();
+        }
+    }
+
+    /**
+     * 关闭垂直菜单
+     */
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    private void closeVerticalMenu() {
+        for (int i = 0; i < imageViews.size(); i++) {
+            /*** 此处使用PointF*/
+            PointF point = new PointF();
+            point.x = 0;
+            /*** 此处y坐标是负的，因为纵坐标向下为正，而我们要在上面显示，大家可以更改符号看效果*/
+            point.y = -(150 * (i + 1));
+            Log.i(TAG, point.toString());
+            ObjectAnimator oax = ObjectAnimator.ofFloat(imageViews.get(i), "translationX", 0, point.x);
+            ObjectAnimator oay = ObjectAnimator.ofFloat(imageViews.get(i), "translationY", point.y, 0);
             ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(imageViews.get(i), "rotation", 0, 360);
             AnimatorSet animatorSet = new AnimatorSet();
             animatorSet.setDuration(500);
